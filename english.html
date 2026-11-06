@@ -677,89 +677,155 @@ body{background:radial-gradient(ellipse at 15% 5%,color-mix(in srgb,var(--accent
 .toolbar input[type=range]{accent-color:var(--accent-bright)}
 .site-mark{background:linear-gradient(145deg,var(--accent-bright),var(--accent));box-shadow:0 8px 30px color-mix(in srgb,var(--accent) 30%,transparent)}
 .site-back:hover,.nav a:hover{border-color:var(--accent-bright)}
+
+/* Consistent controls across all sound cards */
+.symbol{width:76px;height:72px;min-width:76px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;padding:7px 5px;text-align:center;line-height:1.2}
+.symbol small{margin-top:0}
+.cards{grid-template-columns:repeat(auto-fill,minmax(min(100%,300px),1fr))}
+.words{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}
+.word{width:100%;height:44px;min-width:0;justify-content:center;text-align:center;padding:6px 7px;overflow:hidden}
+.word span:last-child{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+@media(max-width:600px){.symbol{width:70px;height:70px;min-width:70px}}
+
+/* Fixed IPA layout: four centered rows on desktop. */
+#vowels, #consonants {
+  display: grid;
+  grid-template-columns: repeat(6, minmax(0, 72px));
+  justify-content: center;
+  align-content: start;
+  gap: 9px;
+}
+#vowels { grid-template-columns: repeat(5, minmax(0, 72px)); }
+.symbols .symbol {
+  width: 100%;
+  min-width: 0;
+  height: 68px;
+  padding: 8px 3px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+@media (max-width: 1100px) {
+  .sound-selectors { grid-template-columns: 1fr; }
+}
+@media (max-width: 520px) {
+  #vowels, #consonants { grid-template-columns: repeat(6, minmax(0, 1fr)); gap: 5px; }
+  #vowels { grid-template-columns: repeat(5, minmax(0, 1fr)); }
+  .symbols .symbol { height: 60px; font-size: 15px; }
+}
+
+/* Keep the search label and input on a single line. */
+.toolbar label:has(#search){flex-wrap:nowrap;white-space:nowrap;min-width:0}
+.toolbar #search{width:220px;min-width:120px;flex:0 1 220px}
+
+/* Compact voice selector */
+#voice{width:190px;max-width:100%;min-width:0;text-overflow:ellipsis}
+
+/* Keep language switching alongside Home in the top navigation. */
+.site-actions{display:flex;align-items:center;justify-content:flex-end;gap:9px;flex-wrap:wrap}
+.site-actions .nav{display:flex;align-items:center;gap:9px;margin:0}
+.site-actions .nav a,.site-actions .site-back{display:inline-flex;align-items:center;justify-content:center;min-height:40px;padding:9px 13px;white-space:nowrap;box-sizing:border-box}
+@media(max-width:650px){.site-topbar{flex-wrap:wrap}.site-actions{width:100%;justify-content:flex-start}.site-actions .nav{flex-wrap:wrap}}
+
+/* UX: responsive sound selection, focus and playback status */
+.symbol:focus-visible,.word:focus-visible,.playall:focus-visible,.site-actions a:focus-visible,#voice:focus-visible,#search:focus-visible{outline:3px solid var(--accent);outline-offset:3px}
+.word.speaking{outline:2px solid var(--accent);outline-offset:-2px;background:color-mix(in srgb,var(--accent) 18%,transparent)}
+.words{grid-template-columns:repeat(3,minmax(0,1fr))}
+@media(max-width:620px){#vowels,#consonants{grid-template-columns:repeat(4,minmax(0,1fr))!important}.toolbar{align-items:stretch}.toolbar label:has(#search){width:100%}.toolbar #search{flex:1;width:auto}}
+@media(max-width:380px){#vowels,#consonants{grid-template-columns:repeat(3,minmax(0,1fr))!important}.words{grid-template-columns:repeat(2,minmax(0,1fr))}}
+
+/* UX structure: compact introduction, sound choice, controls, and practice */
+.site-topbar{max-width:1200px}
+header.page-intro,main.practice-layout{max-width:1200px}
+header.page-intro{padding-top:28px;padding-bottom:23px}
+.page-intro h1{font-size:clamp(32px,4vw,48px);margin:9px 0 8px}
+.page-intro .sub{margin:0;max-width:720px;font-size:15px;line-height:1.6}
+.practice-layout{display:block;padding-bottom:45px}
+.sound-selectors{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:16px;align-items:stretch}
+.sound-selectors .panel{margin:0;padding:22px 15px}
+.sound-panel h2{margin:0 0 18px;font-size:17px}
+#vowels,#consonants{gap:7px;justify-content:center}
+#vowels{grid-template-columns:repeat(5,minmax(0,68px))}
+#consonants{grid-template-columns:repeat(6,minmax(0,68px))}
+.symbols .symbol{height:65px}
+.controls-panel{margin:17px 0 26px;padding:16px 22px}
+.controls-panel .toolbar{margin:0;display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,1fr) minmax(0,1.3fr);gap:18px;align-items:center}
+.controls-panel .toolbar label{margin:0;display:flex;align-items:center;gap:10px;min-width:0;white-space:nowrap;font-size:13px}
+.controls-panel .toolbar label>span:first-child{flex:none}
+.controls-panel .toolbar select{width:100%;max-width:none;min-width:0;text-overflow:ellipsis}
+.controls-panel .toolbar .speed-control input{width:100%;min-width:50px;flex:1}
+.controls-panel .toolbar .speed-control output{min-width:45px;font-variant-numeric:tabular-nums}
+.controls-panel .toolbar .search-control input{flex:1;min-width:0;width:100%;max-width:none}
+.practice-section{margin-top:2px}
+.practice-heading{display:flex;justify-content:space-between;align-items:end;gap:14px;flex-wrap:wrap;margin-bottom:16px}
+.section-kicker{font-size:11px;font-weight:800;letter-spacing:.12em;text-transform:uppercase;color:var(--accent-bright);margin-bottom:6px}
+.practice-heading h2{font-size:clamp(22px,2.5vw,29px);margin:0;letter-spacing:-.025em}
+.practice-heading .summary{margin:0 0 3px;font-size:13px}
+.cards{grid-template-columns:repeat(auto-fill,minmax(min(100%,305px),1fr));gap:15px}
+.card{padding:17px}
+.words{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}
+.word{height:45px}
+.note{margin-top:22px}
+@media(max-width:1100px){.sound-selectors{grid-template-columns:1fr}.sound-selectors .panel{padding:20px}#vowels{grid-template-columns:repeat(5,minmax(0,72px))}#consonants{grid-template-columns:repeat(6,minmax(0,72px))}}
+@media(max-width:760px){.controls-panel .toolbar{grid-template-columns:1fr 1fr}.controls-panel .toolbar .search-control{grid-column:1/-1}.controls-panel .toolbar .search-control input{max-width:none}}
+@media(max-width:620px){.sound-selectors{gap:12px}.sound-selectors .panel{padding:15px 10px}#vowels,#consonants{grid-template-columns:repeat(4,minmax(0,68px))!important;gap:7px}.controls-panel{padding:16px}.controls-panel .toolbar{grid-template-columns:1fr;gap:13px}.controls-panel .toolbar .search-control{grid-column:auto}.controls-panel .toolbar label{width:100%}.practice-heading{align-items:start}.cards{grid-template-columns:1fr}.words{grid-template-columns:repeat(3,minmax(0,1fr))}}
+@media(max-width:380px){#vowels,#consonants{grid-template-columns:repeat(3,minmax(0,68px))!important}.words{grid-template-columns:repeat(3,minmax(0,1fr))}.word{font-size:12px;padding:4px}}
 </style>
 
 </head>
 
 
 
-<body><div class="site-topbar"><a class="site-brand" href="index.html"><span class="site-mark" aria-hidden="true"><svg viewBox="0 0 40 40" width="30" height="30" aria-hidden="true" focusable="false"><text x="20" y="20" text-anchor="middle" dominant-baseline="central" font-family="Arial, sans-serif" font-size="27" font-weight="600" fill="currentColor">ə</text></svg></span><span>Pronunciation Studio</span></a><a class="site-back" href="index.html">← Home</a></div>
+<body>
+<div class="site-topbar">
+  <a class="site-brand" href="index.html"><span class="site-mark" aria-hidden="true"><svg viewBox="0 0 40 40" width="30" height="30" focusable="false" aria-hidden="true"><text x="20" y="20" text-anchor="middle" dominant-baseline="central" font-family="Arial, sans-serif" font-size="27" font-weight="600" fill="currentColor">ə</text></svg></span><span>Pronunciation Studio</span></a>
+  <div class="site-actions"><a class="site-back" href="index.html">← Home</a><nav class="nav" aria-label="Languages"><a href="english.html" class="active" aria-current="page">English</a><a href="norwegian.html" >Norwegian</a></nav></div>
+</div>
+<header class="page-intro"><div class="eyebrow">INTERACTIVE IPA PRACTICE</div><h1>English pronunciation</h1><p class="sub">Choose a sound, then tap a word to hear its pronunciation.</p></header>
+<main class="practice-layout">
+  <div class="sound-selectors" aria-label="Choose a sound">
+    <section class="panel sound-panel" aria-labelledby="vowel-heading"><div class="panel-title"><h2 id="vowel-heading">Vowels</h2></div><div class="symbols" id="vowels"></div></section>
+    <section class="panel sound-panel" aria-labelledby="consonant-heading"><div class="panel-title"><h2 id="consonant-heading">Consonants</h2></div><div class="symbols" id="consonants"></div></section>
+  </div>
+  <section class="controls-panel panel" aria-label="Playback settings and search">
+    <div class="toolbar">
+      <label class="voice-control"><span>Voice</span><select id="voice" aria-label="Choose voice"><option>Default browser voice</option></select></label>
+      <label class="speed-control"><span>Speed</span><input type="range" id="speed" min="0.5" max="1.25" step="0.05" value="0.85"><output id="speedvalue" for="speed">0.85×</output></label>
+      <label class="search-control"><span>Find word</span><input id="search" class="search" type="search" placeholder="Search words…" autocomplete="off"></label>
+    </div>
+  </section>
+  <section class="practice-section" aria-labelledby="chosen">
+    <div class="practice-heading"><div><div class="section-kicker">Practice the selected sound</div><h2 id="chosen"></h2></div><p class="summary" id="summary" role="status" aria-live="polite"></p></div>
+    <div id="cards" class="cards"></div>
+  </section>
+  <p class="note" id="audio-status">Audio uses your browser’s text-to-speech. Choose Andrew (Natural) en-US if available. Word lists are provisional and have not been fully dictionary-verified.</p>
+</main>
+<script>
 
-    <header>
-
-        <div class="eyebrow">Interactive IPA practice</div>
-
-        <h1>English pronunciation</h1>
-
-        <p class="sub">Select a vowel to explore it across consonants, or select a consonant to explore it across
-
-            vowels. Tap any word to hear it.</p>
-
-        <nav class="nav"><a href="english.html" class="active">English</a><a href="norwegian.html"
-
-                class="">Norwegian</a></nav>
-
-    </header>
-
-    <main>
-
-        <div class="sound-selectors">
-
-            <section class="panel">
-
-                <h2>Vowels</h2>
-
-                <div class="symbols" id="vowels"></div>
-
-            </section>
-
-            <section class="panel">
-
-                <h2>Consonants</h2>
-
-                <div class="symbols" id="consonants"></div>
-
-            </section>
-
-        </div>
-
-        <div class="toolbar"><label>Voice <select id="voice" aria-label="Voice selection">
-
-                    <option>Default browser voice</option>
-
-                </select></label><label>Speed <input type="range" id="speed" min="0.5" max="1.25" step="0.05"
-
-                    value="0.85"><span id="speedvalue">0.85×</span></label><label>Find word <input id="search"
-
-                    class="search" type="search" placeholder="Filter words…"></label><button class="secondary"
-
-                id="stop">■ Stop audio</button></div>
-
-        <h2 id="chosen"></h2>
-
-        <p class="summary" id="summary"></p>
-
-        <div id="cards" class="cards"></div>
-
-        <p class="note" id="audio-status">Audio uses browser text-to-speech (Web Speech API), with no external audio
-
-            files. Each displayed card contains five words. For best results, select Andrew (en-US) if it is available
-
-            in your browser. The word lists come from earlier draft spreadsheets and have not been fully
-
-            dictionary-verified; some entries may be incorrect or accent-dependent.</p>
-
-    </main>
-
-    <script>
-
-        const DATA = { "vowels": [{ "symbol": "/ɪ/", "example": "sit" }, { "symbol": "/iː/", "example": "see" }, { "symbol": "/e/", "example": "bed" }, { "symbol": "/æ/", "example": "cat" }, { "symbol": "/ʌ/", "example": "cup" }, { "symbol": "/ɑː/", "example": "car" }, { "symbol": "/ɒ/", "example": "hot" }, { "symbol": "/ɔː/", "example": "law" }, { "symbol": "/ʊ/", "example": "book" }, { "symbol": "/uː/", "example": "blue" }, { "symbol": "/ɜː/", "example": "bird" }, { "symbol": "/ə/", "example": "about" }, { "symbol": "/eɪ/", "example": "day" }, { "symbol": "/aɪ/", "example": "my" }, { "symbol": "/ɔɪ/", "example": "boy" }, { "symbol": "/əʊ/", "example": "go" }, { "symbol": "/aʊ/", "example": "now" }, { "symbol": "/ɪə/", "example": "near" }, { "symbol": "/eə/", "example": "hair" }, { "symbol": "/ʊə/", "example": "pure" }], "consonants": [{ "symbol": "/p/", "example": "" }, { "symbol": "/b/", "example": "" }, { "symbol": "/t/", "example": "" }, { "symbol": "/d/", "example": "" }, { "symbol": "/k/", "example": "" }, { "symbol": "/ɡ/", "example": "" }, { "symbol": "/f/", "example": "" }, { "symbol": "/v/", "example": "" }, { "symbol": "/θ/", "example": "" }, { "symbol": "/ð/", "example": "" }, { "symbol": "/s/", "example": "" }, { "symbol": "/z/", "example": "" }, { "symbol": "/ʃ/", "example": "" }, { "symbol": "/ʒ/", "example": "" }, { "symbol": "/h/", "example": "" }, { "symbol": "/tʃ/", "example": "" }, { "symbol": "/dʒ/", "example": "" }, { "symbol": "/m/", "example": "" }, { "symbol": "/n/", "example": "" }, { "symbol": "/ŋ/", "example": "" }, { "symbol": "/l/", "example": "" }, { "symbol": "/r/", "example": "" }, { "symbol": "/j/", "example": "" }, { "symbol": "/w/", "example": "" }], "grid": [[["pin", "pill", "pink", "spin", "split"], ["pea", "peel", "peep", "sleep", "speed"], ["pen", "pet", "peck", "spend", "spell"], ["pan", "pal", "pack", "plan", "plant"], ["pun", "pup", "puck", "plum", "pluck"], ["palm", "part", "park", "past", "spark"], ["pot", "pop", "pond", "plot", "prop"], ["paw", "Paul", "pore", "port", "sport"], ["put", "push", "pull", "pulp", "pudding"], ["pool", "pooh", "spoon", "proof", "group"], ["pearl", "perch", "person", "purple", "purpose"], ["paper", "pencil", "parcel", "purple", "happen"], ["pain", "pale", "page", "plane", "plate"], ["pine", "pile", "pipe", "spine", "spike"], ["point", "poise", "poison", "appoint", "disappoint"], ["pole", "pope", "poke", "spoke", "probe"], ["pound", "pout", "power", "plough", "proud"], ["peer", "pier", "appear", "period", "pioneer"], ["pair", "pear", "pare", "parent", "prepare"], ["pure", "impure", "purely"]], [["bin", "bill", "bit", "bring", "blink"], ["bee", "beep", "beam", "bleed", "breed"], ["bed", "bell", "bend", "blend", "bread"], ["ban", "bad", "bag", "black", "brand"], ["bun", "bud", "bug", "blunt", "brush"], ["bar", "barn", "bath", "branch", "brass"], ["bog", "bob", "bond", "block", "blot"], ["ball", "born", "board", "broad", "bought"], ["bull", "book", "brook", "bully", "bullet"], ["boo", "boom", "boot", "blue", "bloom"], ["bird", "birth", "burn", "blur", "blurt"], ["butter", "brother", "table", "double", "banana"], ["bay", "bale", "bake", "blame", "brain"], ["buy", "bike", "bite", "blind", "bright"], ["boy", "boil", "boiler", "boycott", "boyfriend"], ["bone", "bowl", "boat", "blow", "broke"], ["bound", "bout", "bow", "brown", "brow"], ["beer", "beard", "bearded", "beery", "beers"], ["bear", "bare", "barely", "bearer", "beware"], ["bureau", "bureaucrat", "bureaucracy"]], [["tin", "till", "tip", "still", "stick"], ["tea", "team", "teal", "steel", "street"], ["ten", "tell", "tent", "step", "stretch"], ["tan", "tap", "tack", "stand", "track"], ["ton", "tub", "tuck", "stun", "truck"], ["tar", "tart", "task", "start", "star"], ["top", "tot", "toss", "stop", "stock"], ["tall", "torn", "taught", "talk", "stork"], ["took", "stood", "foot", "put"], ["too", "tool", "tooth", "tune", "stool"], ["turn", "term", "third", "stir", "stern"], ["today", "table", "title", "letter", "water"], ["tail", "tame", "take", "stay", "train"], ["tie", "time", "tide", "style", "strike"], ["toy", "toil", "toilet", "joint", "oyster"], ["toe", "tone", "toast", "stone", "stroll"], ["town", "towel", "tower", "stout", "trout"], ["tear", "tier", "tears", "steer"], ["tear", "tare", "stare", "stairs", "chair"], ["tour", "tourist", "touring", "toured", "detour"]], [["din", "did", "dip", "drill", "drink"], ["deed", "deep", "deal", "dream", "speed"], ["den", "dead", "debt", "send", "spend"], ["dad", "dam", "dash", "drank", "brand"], ["done", "duck", "dull", "drum", "drug"], ["dark", "dart", "dance", "drama", "hard"], ["dot", "dog", "dock", "don", "drop"], ["door", "dawn", "draw", "drawn", "board"], ["good", "wood", "could", "hood", "stood"], ["do", "doom", "dude", "droop", "food"], ["dirt", "dirge", "dirty", "heard", "word"], ["doctor", "daughter", "danger", "garden", "modern"], ["day", "dale", "date", "drain", "grade"], ["die", "dine", "dive", "drive", "slide"], ["void", "avoid", "destroy", "android", "enjoyed"], ["doe", "dome", "doze", "drone", "road"], ["down", "doubt", "dowry", "drown", "crowd"], ["dear", "deer", "dreary", "idea"], ["dare", "despair", "declare"], ["during", "endure", "endurance"]], [["kin", "kill", "kick", "skin", "skill"], ["key", "keen", "keep", "clean", "creek"], ["ken", "kept", "deck", "neck", "check"], ["can", "cat", "cap", "clan", "crack"], ["cut", "cup", "cull", "cluck", "crush"], ["car", "calm", "cart", "class", "craft"], ["cot", "cop", "cod", "clock", "crop"], ["call", "corn", "caught", "court", "crawl"], ["cook", "could", "look", "book", "crook"], ["cool", "coo", "coop", "clue", "crew"], ["curl", "curb", "curse", "clerk", "work"], ["camera", "colour", "correct", "cooker", "local"], ["cane", "cake", "cage", "claim", "crane"], ["kite", "kind", "climb", "crime"], ["coin", "coil", "choice", "cloy", "coy"], ["cone", "coat", "code", "close", "crow"], ["cow", "count", "couch", "cloud", "crown"], ["clear", "career", "cheer", "queer", "clearing"], ["care", "careful", "scare", "square", "chair"], ["cure", "curious", "curing", "cured", "secure"]], [["give", "gift", "grin", "grill", "pig"], ["geese", "glee", "green", "greed", "grease"], ["get", "guess", "guest", "beg", "egg"], ["gap", "gas", "gang", "glad", "grab"], ["gun", "gum", "gull", "glum", "grub"], ["garden", "guard", "garlic", "grass", "grant"], ["got", "god", "golf", "gone", "grog"], ["gall", "gore", "gourd", "gawk", "gorgeous"], ["good", "goods", "goodness", "sugar", "goodwill"], ["goo", "goose", "goon", "glue", "group"], ["girl", "germ", "gird", "gurgle", "surge"], ["garden", "sugar", "tiger", "bigger", "anger"], ["gain", "game", "gate", "grain", "great"], ["guy", "guide", "guise", "grind", "glide"], ["joyfully", "enjoying", "royal", "gargoyle"], ["go", "goal", "goat", "glow", "grow"], ["gown", "gout", "ground", "growl", "grouse"], ["gear", "gearing", "geared", "engineer", "gears"], ["glare", "glaring", "glared"], []], [["fin", "fill", "fish", "flint", "flinch"], ["fee", "feel", "feet", "free", "freeze"], ["fed", "fell", "fence", "fresh", "friend"], ["fan", "fat", "flag", "flan", "flash"], ["fun", "fuss", "fluff", "flood", "front"], ["far", "farm", "fast", "father", "craft"], ["fog", "fox", "frock", "soft", "frost"], ["fall", "fork", "form", "force", "floor"], ["full", "foot", "fulfil", "football"], ["fool", "food", "proof", "fruit"], ["fur", "firm", "first", "fern", "surf"], ["father", "family", "focus", "famous", "offer"], ["fail", "face", "faint", "flame", "frame"], ["fine", "file", "five", "fight", "flight"], ["foil", "foist", "foible"], ["foe", "foam", "folk", "flow", "float"], ["foul", "fowl", "found", "flour", "flower"], ["fear", "fierce", "fearing", "fearful", "interfere"], ["fair", "fare", "fairly", "fairness", "affair"], []], [["vim", "give", "live", "river", "driven"], ["veal", "leave", "eve", "even"], ["vet", "vest", "very", "never", "clever"], ["van", "vat", "vast", "valve", "travel"], ["love", "glove", "shove", "above", "oven"], ["vase", "vast", "vastly", "carve", "starve"], ["of", "novel", "solve", "revolve", "involve"], [], ["woman", "woven"], ["move", "prove", "groove", "improve", "approve"], ["verb", "verse", "serve", "verge", "curve"], ["river", "never", "oven", "seven", "silver"], ["vain", "vague", "save", "wave", "brave"], ["vine", "vile", "drive", "strive"], [], ["vote", "vogue", "vocal", "over", "clover"], ["vow", "vowel", "vouch", "devour", "avow"], ["veer", "severe", "revere", "veering"], ["vary", "various", "variable"], []], [["thin", "thick", "think", "thing", "fifth"], ["teeth", "theme", "thief", "three"], ["theft", "depth", "breath", "wealth", "health"], ["thank", "thatch", "thrashed", "path", "maths"], ["thumb", "thud", "thug", "thrust", "nothing"], ["bath", "path", "aftermath", "bathroom"], ["cloth", "moth", "broth", "froth", "sloth"], ["thought", "thorn", "thaw", "thwart", "north"], ["footpath"], ["tooth", "truth", "youth", "booth"], ["third", "thirst", "thirty", "earth", "worth"], ["method", "author", "healthy", "thousand", "birthday"], ["faith", "eighth"], ["thigh", "thy", "thine", "thrive", "thrice"], ["thyroid"], [], ["thou", "thousand", "south", "mouth"], [], [], []], [["this", "with", "within", "wither", "hither"], ["breathe", "seethe", "teethe", "either", "neither"], ["them", "then", "feather", "weather", "together"], ["that", "rather", "gather", "lather"], ["mother", "brother", "other", "another", "southern"], ["father", "rather", "lather"], ["bother"], ["northern"], ["wooden", "brotherhood", "motherhood"], ["smooth", "soothe"], ["further"], ["mother", "brother", "father", "other", "feather"], ["they", "bathe"], ["thy", "thine", "either", "neither"], [], ["those", "though", "although"], ["thou", "thousand"], [], ["there", "their", "therefore"], []], [["sin", "sit", "sip", "spin", "slim"], ["see", "seal", "seed", "sleep", "street"], ["send", "sell", "set", "spell", "stress"], ["sat", "sand", "sad", "slang", "stand"], ["sun", "sum", "such", "slug", "struck"], ["star", "start", "scar", "class", "grass"], ["sock", "song", "soft", "stop", "strong"], ["saw", "salt", "sort", "sport", "storm"], ["push", "bush", "should", "sugar", "stood"], ["soon", "soup", "school", "spoon", "smooth"], ["sir", "serve", "first", "stir", "stern"], ["sister", "season", "silence", "student", "salad"], ["say", "same", "sale", "snake", "strain"], ["sigh", "side", "sign", "slide", "strike"], ["soil", "soy", "spoilt", "choice", "noise"], ["so", "soap", "sole", "slow", "smoke"], ["sound", "south", "sour", "scout", "sprout"], ["sear", "seer", "serious", "sphere", "spear"], ["share", "scare", "spare", "stare", "square"], ["sure", "surely", "ensure", "assure"]], [["zip", "zinc", "quiz", "fizz", "whizz"], ["zeal", "zero", "freeze", "sneeze"], ["zen", "zest", "resin", "present", "dozen"], ["zap", "jazz", "razz", "dazzle", "frazzle"], ["buzz", "fuzz", "fuzzy", "dozen", "cousin"], ["czar", "czars"], ["was", "cosmos", "positive"], [], ["sugar", "business"], ["zoo", "zoom", "lose", "whose", "choose"], [], ["zebra", "lazy", "busy", "easy", "cosy"], ["haze", "gaze", "maze", "blaze", "graze"], ["size", "prize", "rise", "wise", "surprise"], ["noise", "noisy", "boys", "toys", "enjoys"], ["zone", "zoning", "zoned", "ozone", "frozen"], ["thousand", "housing", "rousing"], [], [], []], [["ship", "shin", "fish", "dish", "shrill"], ["she", "sheep", "sheet", "shield", "shriek"], ["shell", "shed", "fresh", "mesh", "flesh"], ["shall", "sham", "shack", "flash", "splash"], ["shut", "shun", "shrub", "rush", "flush"], ["sharp", "shark", "shard", "sharpen", "marsh"], ["shop", "shot", "shock", "shod", "slosh"], ["shore", "short", "shawl", "shorn"], [], ["shoe", "shoot", "shoo", "shrew", "shrewd"], ["shirt", "shirk", "shepherd", "furnish", "worship"], ["fashion", "station", "mission", "nation", "ocean"], ["shame", "shape", "shake", "shade", "shaking"], ["shy", "shine", "shrine", "shyly", "sunshine"], [], ["show", "shown", "shoulder", "showing", "showroom"], ["shower", "shout", "shouting"], ["sheer", "shear", "sheerly", "shearing"], ["share", "sharing", "shared"], ["sure", "surely"]], [["vision", "division", "decision", "revision", "television"], [], ["measure", "pleasure", "treasure"], ["casual", "casually"], [], ["mirage"], [], [], [], [], [], ["measure", "pleasure", "treasure", "vision", "decision"], [], [], [], [], [], [], [], []], [["hill", "him", "hit", "hint", "hilltop"], ["he", "heel", "heat", "heal", "heave"], ["hen", "head", "help", "held", "health"], ["ham", "hat", "hand", "hang", "happy"], ["hut", "hull", "hump", "hunt", "hush"], ["hard", "harm", "heart", "half", "harsh"], ["hot", "hop", "honk", "hock", "horror"], ["hall", "hawk", "horn", "horse", "haul"], [], ["who", "whose", "hoop", "hoot", "hoover"], ["her", "herd", "hurt", "hurl", "heard"], ["happen", "heaven", "human", "hotel", "holiday"], ["hay", "hail", "hate", "haze", "highway"], ["high", "hide", "hike", "hive", "hindsight"], ["hoist", "hoisting"], ["hoe", "hole", "home", "hope", "host"], ["how", "house", "hound", "however"], ["hear", "here", "hearing"], ["hair", "hare", "hairy", "haircut", "hairline"], []], [["chin", "chip", "chill", "rich", "switch"], ["cheese", "cheek", "cheer", "cheap", "speech"], ["chess", "check", "chest", "fetch", "stretch"], ["chat", "chap", "catch", "match", "scratch"], ["chuck", "chum", "chunk", "lunch", "crunch"], ["charm", "chart", "march", "arch"], ["chop", "chock", "watch", "notch"], ["chalk", "chauffeur"], ["butcher", "butchery"], ["chew", "choose", "chews", "chewed", "chewing"], ["church", "churn", "urchin", "search", "perch"], ["teacher", "children", "picture", "nature", "future"], ["chain", "chase", "change", "chafe", "chamber"], ["child", "chime", "chide", "chive", "childhood"], ["choice", "choices"], ["choke", "chose", "chosen", "choking"], ["chow", "chowder"], ["cheer", "cheers", "cheerful", "cheering", "cheerleader"], ["chair", "chairs", "chairman", "chairperson", "chairlift"], []], [["gin", "jig", "Jill", "bridge", "fridge"], ["jeep", "jeans", "gene", "jeer", "junior"], ["jet", "gem", "jelly", "edge", "pledge"], ["jam", "jag", "badge", "magic"], ["judge", "judgement", "grudge", "nudge", "smudge"], ["jar", "jargon", "large", "barge"], ["job", "jog", "jolly", "project", "object"], ["jaw", "jaws", "George", "Georgian"], [], ["June", "jewel", "juice", "jury", "jubilee"], ["journal", "journey", "surgeon", "urgent", "dirge"], ["junior", "gentle", "magic", "language", "major"], ["jail", "Jane", "James", "jade", "jaded"], ["jive", "jibe", "giant"], ["joy", "join", "joint", "joist", "enjoy"], ["joke", "Joe", "Joan", "joker", "joking"], ["joust", "jousting"], ["jeer", "jeers", "jeering"], [], []], [["mill", "mint", "milk", "swim", "trim"], ["me", "meal", "mean", "meet", "stream"], ["men", "met", "mend", "melt", "smell"], ["man", "map", "mat", "slam", "stamp"], ["mum", "mud", "mug", "drum", "plum"], ["arm", "calm", "palm", "farm", "smart"], ["mop", "mob", "moss", "mock", "smog"], ["more", "morn", "mall", "small", "storm"], ["woman", "mushroom"], ["moon", "mood", "move", "smooth", "bloom"], ["murmur", "mirth", "mercy", "term", "firm"], ["mother", "moment", "memory", "machine", "minute"], ["may", "mail", "main", "make", "flame"], ["my", "mile", "mind", "mine", "smile"], ["moist", "moisture", "moisten"], ["moan", "mole", "most", "smoke", "stone"], ["mouth", "mouse", "mount", "mound"], ["mere", "merely"], ["mare", "nightmare"], []], [["in", "inn", "pin", "thin", "spin"], ["knee", "need", "neat", "green", "screen"], ["net", "neck", "nest", "send", "blend"], ["nan", "nap", "pan", "plan", "stand"], ["nun", "nut", "run", "sun", "stun"], ["barn", "branch", "plant", "dance", "grant"], ["not", "nod", "non", "pond", "strong"], ["nor", "north", "born", "corn", "thorn"], ["nook"], ["noon", "new", "noose", "soon", "spoon"], ["nurse", "turn", "burn", "learn", "stern"], ["nation", "never", "number", "novel", "nature"], ["name", "nail", "neigh", "rain", "train"], ["nine", "night", "nice", "line", "shine"], ["noise", "coin", "join", "point", "joint"], ["no", "nose", "note", "known", "snow"], ["now", "noun", "down", "brown", "crown"], ["near", "nearly", "nearness", "nearby"], ["nightmare"], []], [["sing", "ring", "king", "wing", "spring"], ["seeing", "being", "freeing"], ["length", "strength"], ["sang", "rang", "hang", "bang", "clang"], ["lung", "hung", "young", "rung", "clung"], [], ["song", "long", "wrong", "strong", "gong"], [], [], [], [], ["singer", "longer", "stronger", "younger", "hunger"], ["saying", "playing", "staying"], ["flying", "trying", "crying"], [], ["going", "snowing", "flowing"], [], [], [], []], [["lip", "lid", "lit", "fill", "slim"], ["lee", "leaf", "leap", "lean", "clean"], ["let", "leg", "led", "bell", "blend"], ["lad", "lap", "land", "flag", "clap"], ["luck", "love", "lunch", "plug", "blunt"], ["lark", "last", "large", "calm", "glass"], ["lot", "log", "lock", "clock", "flock"], ["law", "lawn", "lord", "flaw"], ["look", "pull", "full", "bull", "wool"], ["loo", "loop", "loose", "blue", "glue"], ["learn", "lurk", "blur", "curl", "clerk"], ["label", "local", "level", "little", "table"], ["lay", "lake", "late", "lane", "plane"], ["lie", "line", "light", "lime", "slide"], ["loyal", "loyalty", "oil", "boil", "coil"], ["low", "load", "loan", "loaf", "glow"], ["loud", "lout", "cloud", "clown", "plough"], ["leer", "leering", "leery", "clear", "clearly"], ["lair", "flare", "glare", "fairly"], ["lure", "luring", "lured"]], [["rib", "rid", "rim", "ring", "grin"], ["read", "reach", "green", "cream"], ["red", "rent", "rest", "fresh", "trend"], ["ran", "ram", "rat", "rang", "brand"], ["run", "rub", "rug", "rush", "truck"], ["rather", "grass", "grant", "branch"], ["rock", "rob", "rod", "rot", "frost"], ["raw", "roar", "draw", "crawl"], ["brook", "crook", "rook", "rookie", "rookery"], ["rule", "rude", "room", "root", "group"], ["firm", "first"], ["river", "ruler", "rural", "reader", "runner"], ["rain", "rail", "rate", "raise", "train"], ["rye", "ride", "rice", "right", "drive"], ["royal", "royalty", "royalist", "royally"], ["row", "road", "rose", "rope", "grow"], ["round", "rouse", "crowd", "brown", "growl"], ["rear", "rearing", "rearward", "rearmost"], ["rare", "rarely", "rareness"], ["rural"]], [["unit", "union", "uniform", "music", "cupid"], ["year", "yield", "yeast", "yearly", "yearbook"], ["yes", "yet", "yell", "yellow", "yesterday"], ["yak", "yam", "yahoo", "yapping"], ["young", "yuck", "yummy", "youngster", "youngish"], ["yard", "yarn"], ["yacht", "yoghurt", "yonder", "yokel"], ["yawn", "yawl", "yawning"], ["Europe", "European"], ["you", "youth"], ["yearn"], ["union", "uniform", "universe", "music", "curious"], ["yay", "Yale"], ["yikes", "yipe", "yippee"], [], ["yolk", "yoke", "yoga", "yodel"], ["yowl", "yowling"], ["year", "years", "yearly", "yearbook"], [], ["pure", "cure", "curious"]], [["win", "will", "wish", "wind", "swim"], ["we", "week", "weep", "weed", "sweet"], ["well", "wet", "west", "when", "twelve"], ["wag", "wax", "wan", "swam", "swamp"], ["one", "won", "once", "wonder", "wonderful"], ["waft"], ["what", "was", "watch", "wash", "swot"], ["war", "warm", "wall", "walk", "swarm"], ["wood", "wool", "would", "woman", "wolf"], ["woo", "woof", "wound", "wooing", "woofer"], ["word", "work", "world", "worm", "worse"], ["woman", "women", "water", "window", "widow"], ["way", "wake", "wade", "wave", "wait"], ["why", "wide", "wine", "wife", "twice"], [], ["woe", "woke", "woven", "woken", "woeful"], ["wow", "wowing", "wowed"], ["weird", "weir", "weirdly", "weirdness"], ["wear", "where", "swear", "wearing", "wearable"], []]] }; const LANG = "en-GB"; const vowels = DATA.vowels, cons = DATA.consonants;
+        const DATA = {"vowels":[{"symbol":"/ɪ/","example":"sit"},{"symbol":"/iː/","example":"see"},{"symbol":"/e/","example":"bed"},{"symbol":"/æ/","example":"cat"},{"symbol":"/ʌ/","example":"cup"},{"symbol":"/ɑː/","example":"car"},{"symbol":"/ɒ/","example":"hot"},{"symbol":"/ɔː/","example":"law"},{"symbol":"/ʊ/","example":"book"},{"symbol":"/uː/","example":"blue"},{"symbol":"/ɜː/","example":"bird"},{"symbol":"/ə/","example":"about"},{"symbol":"/eɪ/","example":"day"},{"symbol":"/aɪ/","example":"my"},{"symbol":"/ɔɪ/","example":"boy"},{"symbol":"/əʊ/","example":"go"},{"symbol":"/aʊ/","example":"now"},{"symbol":"/ɪə/","example":"near"},{"symbol":"/eə/","example":"hair"},{"symbol":"/ʊə/","example":"pure"}],"consonants":[{"symbol":"/p/","example":""},{"symbol":"/b/","example":""},{"symbol":"/t/","example":""},{"symbol":"/d/","example":""},{"symbol":"/k/","example":""},{"symbol":"/ɡ/","example":""},{"symbol":"/f/","example":""},{"symbol":"/v/","example":""},{"symbol":"/θ/","example":""},{"symbol":"/ð/","example":""},{"symbol":"/s/","example":""},{"symbol":"/z/","example":""},{"symbol":"/ʃ/","example":""},{"symbol":"/ʒ/","example":""},{"symbol":"/h/","example":""},{"symbol":"/tʃ/","example":""},{"symbol":"/dʒ/","example":""},{"symbol":"/m/","example":""},{"symbol":"/n/","example":""},{"symbol":"/ŋ/","example":""},{"symbol":"/l/","example":""},{"symbol":"/r/","example":""},{"symbol":"/j/","example":""},{"symbol":"/w/","example":""}],"grid":[[["pin","pill","pink","spin","split","prince"],["pea","peel","peep","sleep","speed","pierre"],["pen","pet","peck","spend","spell","pierre"],["pan","pal","pack","plan","plant","chapter"],["pun","pup","puck","plum","pluck","public"],["palm","part","park","past","spark","upon"],["pot","pop","pond","plot","prop","upon"],["paw","Paul","pore","port","sport","important"],["put","push","pull","pulp","pudding","europe"],["pool","pooh","spoon","proof","group","troops"],["pearl","perch","person","purple","purpose","emperor"],["paper","pencil","parcel","purple","happen","upon"],["pain","pale","page","plane","plate","place"],["pine","pile","pipe","spine","spike","replied"],["point","poise","poison","appoint","disappoint","employed"],["pole","pope","poke","spoke","probe","napoleon"],["pound","pout","power","plough","proud","powers"],["peer","pier","appear","period","pioneer"],["pair","pear","pare","parent","prepare"],["pure","impure","purely"]],[["bin","bill","bit","bring","blink","been"],["bee","beep","beam","bleed","breed","before"],["bed","bell","bend","blend","bread","best"],["ban","bad","bag","black","brand","began"],["bun","bud","bug","blunt","brush","but"],["bar","barn","bath","branch","brass","because"],["bog","bob","bond","block","blot","because"],["ball","born","board","broad","bought","before"],["bull","book","brook","bully","bullet","books"],["boo","boom","boot","blue","bloom","gutenberg"],["bird","birth","burn","blur","blurt","labor"],["butter","brother","table","double","banana","been"],["bay","bale","bake","blame","brain","labor"],["buy","bike","bite","blind","bright","behind"],["boy","boil","boiler","boycott","boyfriend","boys"],["bone","bowl","boat","blow","broke","both"],["bound","bout","bow","brown","brow","about"],["beer","beard","bearded","beery","beers"],["bear","bare","barely","bearer","beware"],["bureau","bureaucrat","bureaucracy"]],[["tin","till","tip","still","stick","into"],["tea","team","teal","steel","street","between"],["ten","tell","tent","step","stretch","went"],["tan","tap","tack","stand","track","that"],["ton","tub","tuck","stun","truck","but"],["tar","tart","task","start","star","not"],["top","tot","toss","stop","stock","not"],["tall","torn","taught","talk","stork","thought"],["took","stood","foot","put","looked","understood"],["too","tool","tooth","tune","stool","into"],["turn","term","third","stir","stern","after"],["today","table","title","letter","water","that"],["tail","tame","take","stay","train","states"],["tie","time","tide","style","strike","right"],["toy","toil","toilet","joint","oyster","point"],["toe","tone","toast","stone","stroll","most"],["town","towel","tower","stout","trout","out"],["tear","tier","tears","steer"],["tear","tare","stare","stairs","chair"],["tour","tourist","touring","toured","detour"]],[["din","did","dip","drill","drink","good"],["deed","deep","deal","dream","speed","seemed"],["den","dead","debt","send","spend","said"],["dad","dam","dash","drank","brand","and"],["done","duck","dull","drum","drug","under"],["dark","dart","dance","drama","hard","don"],["dot","dog","dock","don","drop","god"],["door","dawn","draw","drawn","board","already"],["good","wood","could","hood","stood","would"],["do","doom","dude","droop","food","andrew"],["dirt","dirge","dirty","heard","word","under"],["doctor","daughter","danger","garden","modern","and"],["day","dale","date","drain","grade","made"],["die","dine","dive","drive","slide","united"],["void","avoid","destroy","android","enjoyed","employed"],["doe","dome","doze","drone","road","old"],["down","doubt","dowry","drown","crowd","round"],["dear","deer","dreary","idea"],["dare","despair","declare"],["during","endure","endurance"]],[["kin","kill","kick","skin","skill","american"],["key","keen","keep","clean","creek","country"],["ken","kept","deck","neck","check","american"],["can","cat","cap","clan","crack","asked"],["cut","cup","cull","cluck","crush","come"],["car","calm","cart","class","craft","moscow"],["cot","cop","cod","clock","crop","moscow"],["call","corn","caught","court","crawl","moscow"],["cook","could","look","book","crook","looked"],["cool","coo","coop","clue","crew","continued"],["curl","curb","curse","clerk","work","commander"],["camera","colour","correct","cooker","local","can"],["cane","cake","cage","claim","crane","came"],["kite","kind","climb","crime","like","quite"],["coin","coil","choice","cloy","coy","convoy"],["cone","coat","code","close","crow","moscow"],["cow","count","couch","cloud","crown","moscow"],["clear","career","cheer","queer","clearing"],["care","careful","scare","square","chair"],["cure","curious","curing","cured","secure"]],[["give","gift","grin","grill","pig","began"],["geese","glee","green","greed","grease","began"],["get","guess","guest","beg","egg","again"],["gap","gas","gang","glad","grab","began"],["gun","gum","gull","glum","grub","government"],["garden","guard","garlic","grass","grant","congress"],["got","god","golf","gone","grog","congress"],["gall","gore","gourd","gawk","gorgeous","gone"],["good","goods","goodness","sugar","goodwill"],["goo","goose","goon","glue","group","gutenberg"],["girl","germ","gird","gurgle","surge","government"],["garden","sugar","tiger","bigger","anger","again"],["gain","game","gate","grain","great","again"],["guy","guide","guise","grind","glide","diagnosis"],["joyfully","enjoying","royal","gargoyle","groin"],["go","goal","goat","glow","grow","going"],["gown","gout","ground","growl","grouse","grounds"],["gear","gearing","geared","engineer","gears"],["glare","glaring","glared"],[]],[["fin","fill","fish","flint","flinch","before"],["fee","feel","feet","free","freeze","before"],["fed","fell","fence","fresh","friend","himself"],["fan","fat","flag","flan","flash","after"],["fun","fuss","fluff","flood","front","from"],["far","farm","fast","father","craft","followed"],["fog","fox","frock","soft","frost","father"],["fall","fork","form","force","floor","for"],["full","foot","fulfil","football","yourself","fully"],["fool","food","proof","fruit","few","influence"],["fur","firm","first","fern","surf","for"],["father","family","focus","famous","offer","officer"],["fail","face","faint","flame","frame","formation"],["fine","file","five","fight","flight","life"],["foil","foist","foible","joyful","joyfully","typhoid"],["foe","foam","folk","flow","float","followed"],["foul","fowl","found","flour","flower","foundation"],["fear","fierce","fearing","fearful","interfere"],["fair","fare","fairly","fairness","affair"],[]],[["vim","give","live","river","driven","even"],["veal","leave","eve","even","very","every"],["vet","vest","very","never","clever","every"],["van","vat","vast","valve","travel","have"],["love","glove","shove","above","oven","government"],["vase","vast","vastly","carve","starve","rostov"],["of","novel","solve","revolve","involve","rostov"],[],["woman","woven","overtook"],["move","prove","groove","improve","approve","movement"],["verb","verse","serve","verge","curve","over"],["river","never","oven","seven","silver","government"],["vain","vague","save","wave","brave","gave"],["vine","vile","drive","strive","five","divided"],[],["vote","vogue","vocal","over","clover","drove"],["vow","vowel","vouch","devour","avow","however"],["veer","severe","revere","veering"],["vary","various","variable"],[]],[["thin","thick","think","thing","fifth","with"],["teeth","theme","thief","three","everything","anything"],["theft","depth","breath","wealth","health","everything"],["thank","thatch","thrashed","path","maths","enthusiasm"],["thumb","thud","thug","thrust","nothing","something"],["bath","path","aftermath","bathroom","arthritis","thrombosis"],["cloth","moth","broth","froth","sloth","arthritis"],["thought","thorn","thaw","thwart","north","thoughts"],["footpath"],["tooth","truth","youth","booth","through","threw"],["third","thirst","thirty","earth","worth","theory"],["method","author","healthy","thousand","birthday","authority"],["faith","eighth","eighteenth","faithful"],["thigh","thy","thine","thrive","thrice","arthritis"],["thyroid"],[],["thou","thousand","south","mouth","without","thousands"],[],[],[]],[["this","with","within","wither","hither","without"],["breathe","seethe","teethe","either","neither","the"],["them","then","feather","weather","together","there"],["that","rather","gather","lather","than","gathered"],["mother","brother","other","another","southern","the"],["father","rather","lather","farther","fatherland","stepfather"],["bother","father","farther","fatherland","stepfather","fathers"],["northern","therefore","although","withdrawn","altogether","withdraw"],["wooden","brotherhood","motherhood"],["smooth","soothe","hitherto","soothing"],["further","other","another","father","others","whether"],["mother","brother","father","other","feather","the"],["they","bathe"],["thy","thine","either","neither","otherwise","thereby"],[],["those","though","although","clothes","clothing"],["thou","thousand","without"],[],["there","their","therefore"],[]],[["sin","sit","sip","spin","slim","this"],["see","seal","seed","sleep","street","seemed"],["send","sell","set","spell","stress","said"],["sat","sand","sad","slang","stand","asked"],["sun","sum","such","slug","struck","some"],["star","start","scar","class","grass","rostov"],["sock","song","soft","stop","strong","rostov"],["saw","salt","sort","sport","storm","also"],["push","bush","should","sugar","stood","understood"],["soon","soup","school","spoon","smooth","tissue"],["sir","serve","first","stir","stern","officer"],["sister","season","silence","student","salad","against"],["say","same","sale","snake","strain","face"],["sigh","side","sign","slide","strike","smile"],["soil","soy","spoilt","choice","noise","voice"],["so","soap","sole","slow","smoke","most"],["sound","south","sour","scout","sprout","moscow"],["sear","seer","serious","sphere","spear"],["share","scare","spare","stare","square"],["sure","surely","ensure","assure"]],[["zip","zinc","quiz","fizz","whizz","his"],["zeal","zero","freeze","sneeze","these","disease"],["zen","zest","resin","present","dozen","president"],["zap","jazz","razz","dazzle","frazzle","has"],["buzz","fuzz","fuzzy","dozen","cousin","because"],["czar","czars","was","because","cause","arms"],["was","cosmos","positive","because","cause","arms"],[],["sugar","business","aneurysm","goods","missouri","yours"],["zoo","zoom","lose","whose","choose","tissues"],[],["zebra","lazy","busy","easy","cosy","was"],["haze","gaze","maze","blaze","graze","always"],["size","prize","rise","wise","surprise","eyes"],["noise","noisy","boys","toys","enjoys","voices"],["zone","zoning","zoned","ozone","frozen","those"],["thousand","housing","rousing","hours","powers","houses"],[],[],[]],[["ship","shin","fish","dish","shrill","tissue"],["she","sheep","sheet","shield","shriek","especially"],["shell","shed","fresh","mesh","flesh","especially"],["shall","sham","shack","flash","splash","natasha"],["shut","shun","shrub","rush","flush","russian"],["sharp","shark","shard","sharpen","marsh","natasha"],["shop","shot","shock","shod","slosh","natasha"],["shore","short","shawl","shorn","formation","washington"],[],["shoe","shoot","shoo","shrew","shrewd","tissue"],["shirt","shirk","shepherd","furnish","worship","pressure"],["fashion","station","mission","nation","ocean","natasha"],["shame","shape","shake","shade","shaking","patient"],["shy","shine","shrine","shyly","sunshine","direction"],[],["show","shown","shoulder","showing","showroom","associated"],["shower","shout","shouting","shouted","foundation","shouts"],["sheer","shear","sheerly","shearing"],["share","sharing","shared"],["sure","surely"]],[["vision","division","decision","revision","television","provisions"],[],["measure","pleasure","treasure","measures","treasury","measured"],["casual","casually","anaesthesia"],[],["mirage","massage"],[],[],[],[],[],["measure","pleasure","treasure","vision","decision","usually"],[],[],[],[],[],[],[],[]],[["hill","him","hit","hint","hilltop","his"],["he","heel","heat","heal","heave","here"],["hen","head","help","held","health","when"],["ham","hat","hand","hang","happy","had"],["hut","hull","hump","hunt","hush","what"],["hard","harm","heart","half","harsh","hardly"],["hot","hop","honk","hock","horror","heart"],["hall","hawk","horn","horse","haul","horses"],[],["who","whose","hoop","hoot","hoover","whom"],["her","herd","hurt","hurl","heard","history"],["happen","heaven","human","hotel","holiday","has"],["hay","hail","hate","haze","highway","hastily"],["high","hide","hike","hive","hindsight","while"],["hoist","hoisting"],["hoe","hole","home","hope","host","whole"],["how","house","hound","however","houses","household"],["hear","here","hearing"],["hair","hare","hairy","haircut","hairline"],[]],[["chin","chip","chill","rich","switch","which"],["cheese","cheek","cheer","cheap","speech","each"],["chess","check","chest","fetch","stretch","french"],["chat","chap","catch","match","scratch","chapter"],["chuck","chum","chunk","lunch","crunch","such"],["charm","chart","march","arch","discharge","charge"],["chop","chock","watch","notch","march","discharge"],["chalk","chauffeur","porch","watched","watch","fortunes"],["butcher","butchery","childhood"],["chew","choose","chews","chewed","chewing","future"],["church","churn","urchin","search","perch","chapter"],["teacher","children","picture","nature","future","question"],["chain","chase","change","chafe","chamber","nature"],["child","chime","chide","chive","childhood","china"],["choice","choices"],["choke","chose","chosen","choking","approached","approaching"],["chow","chowder","couch"],["cheer","cheers","cheerful","cheering","cheerleader"],["chair","chairs","chairman","chairperson","chairlift"],[]],[["gin","jig","Jill","bridge","fridge","just"],["jeep","jeans","gene","jeer","junior","injury"],["jet","gem","jelly","edge","pledge","general"],["jam","jag","badge","magic","adjutant","carriage"],["judge","judgement","grudge","nudge","smudge","just"],["jar","jargon","large","barge","john","cartilage"],["job","jog","jolly","project","object","large"],["jaw","jaws","George","Georgian","majority","origin"],[],["June","jewel","juice","jury","jubilee","huge"],["journal","journey","surgeon","urgent","dirge","general"],["junior","gentle","magic","language","major","general"],["jail","Jane","James","jade","jaded","strange"],["jive","jibe","giant","july","obliged","gigantic"],["joy","join","joint","joist","enjoy","joints"],["joke","Joe","Joan","joker","joking","soldiers"],["joust","jousting"],["jeer","jeers","jeering"],[],[]],[["mill","mint","milk","swim","trim","him"],["me","meal","mean","meet","stream","army"],["men","met","mend","melt","smell","them"],["man","map","mat","slam","stamp","matter"],["mum","mud","mug","drum","plum","from"],["arm","calm","palm","farm","smart","army"],["mop","mob","moss","mock","smog","army"],["more","morn","mall","small","storm","moscow"],["woman","mushroom","aneurysm","missouri","footman","manhood"],["moon","mood","move","smooth","bloom","room"],["murmur","mirth","mercy","term","firm","government"],["mother","moment","memory","machine","minute","them"],["may","mail","main","make","flame","same"],["my","mile","mind","mine","smile","time"],["moist","moisture","moisten","employed","appointment","employees"],["moan","mole","most","smoke","stone","moscow"],["mouth","mouse","mount","mound","moscow","amount"],["mere","merely"],["mare","nightmare"],[]],[["in","inn","pin","thin","spin","when"],["knee","need","neat","green","screen","only"],["net","neck","nest","send","blend","when"],["nan","nap","pan","plan","stand","and"],["nun","nut","run","sun","stun","one"],["barn","branch","plant","dance","grant","not"],["not","nod","non","pond","strong","natasha"],["nor","north","born","corn","thorn","often"],["nook","woman","understood","aneurysm","european","footman"],["noon","new","noose","soon","spoon","into"],["nurse","turn","burn","learn","stern","under"],["nation","never","number","novel","nature","and"],["name","nail","neigh","rain","train","again"],["nine","night","nice","line","shine","united"],["noise","coin","join","point","joint","joints"],["no","nose","note","known","snow","only"],["now","noun","down","brown","crown","count"],["near","nearly","nearness","nearby"],["nightmare"],[]],[["sing","ring","king","wing","spring","being"],["seeing","being","freeing","everything","anything","feeling"],["length","strength","everything","anything","swelling","dressing"],["sang","rang","hang","bang","clang","having"],["lung","hung","young","rung","clung","something"],[],["song","long","wrong","strong","gong","congress"],[],[],[],[],["singer","longer","stronger","younger","hunger","among"],["saying","playing","staying","taking","making","waiting"],["flying","trying","crying","smiling","lying","firing"],[],["going","snowing","flowing","following","growing","opening"],[],[],[],[]],[["lip","lid","lit","fill","slim","will"],["lee","leaf","leap","lean","clean","only"],["let","leg","led","bell","blend","well"],["lad","lap","land","flag","clap","shall"],["luck","love","lunch","plug","blunt","blood"],["lark","last","large","calm","glass","law"],["lot","log","lock","clock","flock","large"],["law","lawn","lord","flaw","all","long"],["look","pull","full","bull","wool","looked"],["loo","loop","loose","blue","glue","usually"],["learn","lurk","blur","curl","clerk","general"],["label","local","level","little","table","will"],["lay","lake","late","lane","plane","place"],["lie","line","light","lime","slide","like"],["loyal","loyalty","oil","boil","coil","employed"],["low","load","loan","loaf","glow","only"],["loud","lout","cloud","clown","plough","allow"],["leer","leering","leery","clear","clearly"],["lair","flare","glare","fairly"],["lure","luring","lured"]],[["rib","rid","rim","ring","grin","prince"],["read","reach","green","cream","pierre","before"],["red","rent","rest","fresh","trend","there"],["ran","ram","rat","rang","brand","andrew"],["run","rub","rug","rush","truck","from"],["rather","grass","grant","branch","are","our"],["rock","rob","rod","rot","frost","are"],["raw","roar","draw","crawl","for","more"],["brook","crook","rook","rookie","rookery","your"],["rule","rude","room","root","group","andrew"],["firm","first","for","order","pressure","forward"],["river","ruler","rural","reader","runner","general"],["rain","rail","rate","raise","train","great"],["rye","ride","rice","right","drive","replied"],["royal","royalty","royalist","royally","destroyed","destroy"],["row","road","rose","rope","grow","rode"],["round","rouse","crowd","brown","growl","our"],["rear","rearing","rearward","rearmost"],["rare","rarely","rareness"],["rural"]],[["unit","union","uniform","music","cupid","tissue"],["year","yield","yeast","yearly","yearbook","usually"],["yes","yet","yell","yellow","yesterday","yourself"],["yak","yam","yahoo","yapping","aneurysm","value"],["young","yuck","yummy","youngster","youngish","muscular"],["yard","yarn","popular","articular","occupied","marya"],["yacht","yoghurt","yonder","yokel","popular","articular"],["yawn","yawl","yawning","your","york","yourself"],["Europe","European","your","during","aneurysm","yourself"],["you","youth","new","tissue","united","usually"],["yearn","years","yourself","virginia","popular","future"],["union","uniform","universe","music","curious","napoleon"],["yay","Yale","population","circulation","granulation","regular"],["yikes","yipe","yippee","united","occupied","unite"],[],["yolk","yoke","yoga","yodel","napoleon","sonya"],["yowl","yowling"],["year","years","yearly","yearbook"],[],["pure","cure","curious"]],[["win","will","wish","wind","swim","with"],["we","week","weep","weed","sweet","between"],["well","wet","west","when","twelve","went"],["wag","wax","wan","swam","swamp","afterwards"],["one","won","once","wonder","wonderful","what"],["waft","was","want","won","washington","watson"],["what","was","watch","wash","swot","want"],["war","warm","wall","walk","swarm","always"],["wood","wool","would","woman","wolf","underwood"],["woo","woof","wound","wooing","woofer","usually"],["word","work","world","worm","worse","were"],["woman","women","water","window","widow","was"],["way","wake","wade","wave","wait","away"],["why","wide","wine","wife","twice","while"],[],["woe","woke","woven","woken","woeful","window"],["wow","wowing","wowed","without","downwards","downward"],["weird","weir","weirdly","weirdness"],["wear","where","swear","wearing","wearable"],[]]]}; const LANG = "en-GB"; const vowels = DATA.vowels, cons = DATA.consonants;
 
         const $ = id => document.getElementById(id); let selection = { type: 'vowel', index: 0 }; let voices = []; let playToken = 0;
 
         function esc(s) { return String(s).replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c])); }
 
-        function voiceUpdate() {
+        function formatVoiceLabel(voice) {
+    // Keep only the actual voice's short display name, not the provider description.
+    const raw = voice.name.trim();
+    let name = raw.replace(/^Microsoft\s+/i, '')
+        .replace(/\s+Online\b.*$/i, '')
+        .replace(/\s*\((?:Natural|Neural)[^)]*\).*$/i, '')
+        .replace(/\s*[-–]\s*(?:Natural|Neural).*$/i, '')
+        .replace(/\s*\([^)]*\)\s*$/g, '')
+        .trim();
+    // Microsoft voices have a simple given name; remove leftover metadata.
+    if (/^Microsoft\s/i.test(raw)) name = name.split(/\s+/)[0];
+    const natural = /natural|neural|online/i.test(raw) ? ' (Natural)' : '';
+    return `${name || raw}${natural} ${voice.lang}`;
+}
+
+function voiceUpdate() {
 
             if (!('speechSynthesis' in window)) return;
 
@@ -769,7 +835,7 @@ body{background:radial-gradient(ellipse at 15% 5%,color-mix(in srgb,var(--accent
 
             const select = $('voice'); const old = select.value;
 
-            select.innerHTML = matches.map(v => `<option value="${esc(v.voiceURI)}">${esc(v.name)} (${esc(v.lang)})</option>`).join('');
+            select.innerHTML = matches.map(v => `<option value="${esc(v.voiceURI)}">${esc(formatVoiceLabel(v))}</option>`).join('');
 
             if (matches.some(v => v.voiceURI === old)) { select.value = old; return; }
 
@@ -785,21 +851,86 @@ body{background:radial-gradient(ellipse at 15% 5%,color-mix(in srgb,var(--accent
 
         if ('speechSynthesis' in window) { speechSynthesis.onvoiceschanged = voiceUpdate; voiceUpdate(); } else { $('audio-status').textContent = 'Speech synthesis is not available in this browser.'; }
 
-        function stop() { playToken++; if ('speechSynthesis' in window) speechSynthesis.cancel(); }
+        function stop() { playToken++; document.querySelectorAll('.speaking').forEach(el => el.classList.remove('speaking')); if ('speechSynthesis' in window) speechSynthesis.cancel(); }
 
         function cleanWord(s) { return s.replace(/\\\\\\/g, '').replace(/\s\\\([^)]\\\)/g, '').trim(); }
 
-        function speakWord(word) { return new Promise(resolve => { if (!('speechSynthesis' in window)) { resolve(); return; } const utter = new SpeechSynthesisUtterance(cleanWord(word)); utter.lang = LANG; utter.rate = Number($('speed').value); const voice = voices.find(v => v.voiceURI === $('voice').value); if (voice) utter.voice = voice; utter.onend = resolve; utter.onerror = resolve; speechSynthesis.speak(utter); }); }
+        function speakWord(word, button) {
+  return new Promise(resolve => {
+    if (!('speechSynthesis' in window)) { resolve(); return; }
+    const utter = new SpeechSynthesisUtterance(cleanWord(word));
+    utter.lang = LANG;
+    utter.rate = Number($('speed').value);
+    const voice = voices.find(v => v.voiceURI === $('voice').value);
+    if (voice) utter.voice = voice;
+    let settled = false;
+    const done = () => { if (settled) return; settled = true; button?.classList.remove('speaking'); resolve(); };
+    utter.onstart = () => button?.classList.add('speaking');
+    utter.onend = done;
+    utter.onerror = done;
+    speechSynthesis.speak(utter);
+  });
+}
 
-        async function playWords(words) { stop(); let token = playToken; for (let w of words) { if (token !== playToken) break; await speakWord(w); } }
 
-        function symbols() { for (let [id, arr, type] of [['vowels', vowels, 'vowel'], ['consonants', cons, 'consonant']]) { $(id).innerHTML = arr.map((v, i) => `<button class="symbol ${selection.type === type && selection.index === i ? 'selected' : ''}" data-type="${type}" data-index="${i}">${esc(v.symbol)}${v.example ? `<small>${esc(v.example)}</small>` : ''}</button>`).join(''); } }
 
-        function render() { stop(); symbols(); const isV = selection.type === 'vowel'; const chosen = (isV ? vowels : cons)[selection.index]; $('chosen').textContent = `${isV ? 'Vowel' : 'Consonant'} ${chosen.symbol}${chosen.example ? ' · ' + chosen.example : ''}`; let query = $('search').value.trim().toLowerCase(); let cards = []; for (let i = 0; i < (isV ? cons : vowels).length; i++) { let words = (isV ? DATA.grid[i][selection.index] : DATA.grid[selection.index][i]) || []; if (words.length !== 5) continue; if (query && !words.some(w => w.toLowerCase().includes(query))) continue; cards.push({ head: (isV ? cons : vowels)[i], words }); } let count = cards.reduce((n, c) => n + c.words.length, 0); $('summary').textContent = `${cards.length} sound cards · ${count} word entries`; $('cards').innerHTML = cards.map((c, i) => `<article class="card"><div class="card-head"><h3>${esc(c.head.symbol)} ${c.head.example ? `<small>${esc(c.head.example)}</small>` : ''}</h3><button class="playall" data-card="${i}" aria-label="Play all words for ${esc(c.head.symbol)}">▶ Play all</button></div><div class="words">${c.words.map((w, j) => `<button class="word" type="button" data-word="${i}:${j}" aria-label="Play ${esc(cleanWord(w))}"><span class="play-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg></span><span>${esc(cleanWord(w))}</span></button>`).join('')}</div></article>`).join('') || '<div class="empty">No complete five-word cards match this selection.</div>'; window.visibleCards = cards; }
+        async function playWords(words, cardIndex, wordIndex = null) {
+  stop();
+  const token = playToken;
+  for (let j = 0; j < words.length; j++) {
+    if (token !== playToken) break;
+    const button = document.querySelector(`[data-word="${cardIndex}:${wordIndex === null ? j : wordIndex}"]`);
+    await speakWord(words[j], button);
+  }
+}
 
-        document.addEventListener('click', e => { const s = e.target.closest('.symbol'); if (s) { selection = { type: s.dataset.type, index: Number(s.dataset.index) }; $('search').value = ''; render(); return; } const a = e.target.closest('[data-card]'); if (a) { playWords(window.visibleCards[Number(a.dataset.card)].words); return; } const w = e.target.closest('[data-word]'); if (w) { const [i, j] = w.dataset.word.split(':').map(Number); playWords([window.visibleCards[i].words[j]]); } });
 
-        $('search').addEventListener('input', render); $('stop').addEventListener('click', stop); $('speed').addEventListener('input', () => { $('speedvalue').textContent = Number($('speed').value).toFixed(2) + '×'; }); render();
+
+        function symbols() {
+  for (const [id, arr, type] of [['vowels', vowels, 'vowel'], ['consonants', cons, 'consonant']]) {
+    $(id).innerHTML = arr.map((v, i) => {
+      const selected = selection.type === type && selection.index === i;
+      return `<button type="button" class="symbol ${selected ? 'selected' : ''}" aria-pressed="${selected}" data-type="${type}" data-index="${i}">${esc(v.symbol)}${v.example ? `<small>${esc(v.example)}</small>` : ''}</button>`;
+    }).join('');
+  }
+}
+
+
+
+        const L = {"vowel": "Vowel", "consonant": "Consonant", "all": "Play all", "play": "Play", "noResults": "No words match your search.", "noWords": "No words available for this sound.", "cards": "sound cards", "words": "words"};
+
+function render() {
+  symbols();
+  const isV = selection.type === 'vowel';
+  const chosen = (isV ? vowels : cons)[selection.index];
+  $('chosen').textContent = `${isV ? L.vowel : L.consonant} ${chosen.symbol}${chosen.example ? ' · ' + chosen.example : ''}`;
+  const query = $('search').value.trim().toLocaleLowerCase();
+  const cards = [];
+  for (let i = 0; i < (isV ? cons : vowels).length; i++) {
+    const source = (isV ? DATA.grid[i]?.[selection.index] : DATA.grid[selection.index]?.[i]) || [];
+    const unique = [...new Set(source.map(cleanWord).filter(Boolean))];
+    const words = unique.filter(w => !query || w.toLocaleLowerCase().includes(query)).slice(0, 6);
+    if (!words.length) continue;
+    cards.push({ head: (isV ? cons : vowels)[i], words });
+  }
+  const count = cards.reduce((n, c) => n + c.words.length, 0);
+  $('summary').textContent = `${cards.length} ${L.cards} · ${count} ${L.words}`;
+  $('cards').innerHTML = cards.map((c, i) => `<article class="card"><div class="card-head"><h3>${esc(c.head.symbol)} ${c.head.example ? `<small>${esc(c.head.example)}</small>` : ''}</h3><button type="button" class="playall" data-card="${i}" aria-label="${L.all} ${esc(c.head.symbol)}">▶ ${L.all}</button></div><div class="words">${c.words.map((w, j) => `<button class="word" type="button" data-word="${i}:${j}" aria-label="${L.play} ${esc(w)}"><span class="play-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg></span><span>${esc(w)}</span></button>`).join('')}</div></article>`).join('') || `<div class="empty" role="status">${query ? L.noResults : L.noWords}</div>`;
+  window.visibleCards = cards;
+}
+
+
+
+        document.addEventListener('click', e => {
+  const symbol = e.target.closest('.symbol');
+  if (symbol) { stop(); selection = {type: symbol.dataset.type, index: Number(symbol.dataset.index)}; $('search').value = ''; render(); return; }
+  const all = e.target.closest('[data-card]');
+  if (all) { const i = Number(all.dataset.card); playWords(window.visibleCards[i].words, i); return; }
+  const word = e.target.closest('[data-word]');
+  if (word) { const [i, j] = word.dataset.word.split(':').map(Number); playWords([window.visibleCards[i].words[j]], i, j); }
+});
+
+        $('search').addEventListener('input', render); $('speed').addEventListener('input', () => { $('speedvalue').textContent = Number($('speed').value).toFixed(2) + '×'; }); render();
 
     </script>
 
