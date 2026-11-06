@@ -1,1 +1,48 @@
-<a href="english.html">English</a>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#0b1020">
+  <meta name="description" content="Practice English and Norwegian pronunciation with interactive IPA sound cards and word playback.">
+  <title>Pronunciation Studio · English & Norwegian</title>
+  <style>
+    :root{color-scheme:dark;--bg:#0b1020;--text:#edf3ff;--muted:#a6b5d2;--line:#334365;--blue:#83a2ff;font-family:Inter,system-ui,-apple-system,"Segoe UI",sans-serif}
+    *{box-sizing:border-box}html{min-height:100%}body{margin:0;min-height:100vh;color:var(--text);background:radial-gradient(ellipse at 15% 5%,#203765 0,transparent 46%),radial-gradient(ellipse at 90% 85%,#17264a 0,transparent 42%),var(--bg)}
+    .shell{max-width:1120px;margin:auto;padding:36px 28px 32px;min-height:100vh;display:flex;flex-direction:column}
+    .topbar{display:flex;align-items:center;justify-content:space-between;gap:20px}.brand{display:flex;align-items:center;gap:12px;font-weight:800;letter-spacing:-.025em;font-size:17px}.brand-mark{width:40px;height:40px;border-radius:13px;background:linear-gradient(145deg,#6289ff,#314aaf);display:grid;place-items:center;font-size:22px;box-shadow:0 8px 30px #345cd54d}.top-note{font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:#9fb4e4;font-weight:700}
+    main{flex:1;display:flex;flex-direction:column;justify-content:center;padding:68px 0 80px}.eyebrow{display:inline-flex;align-items:center;gap:9px;color:#a5bcff;font-size:12px;font-weight:800;letter-spacing:.17em;text-transform:uppercase}.eyebrow:before{content:"";width:7px;height:7px;border-radius:50%;background:#80a5ff;box-shadow:0 0 15px #80a5ff}h1{font-size:clamp(42px,6.2vw,76px);line-height:1.06;letter-spacing:-.06em;margin:19px 0 18px;max-width:800px}h1 span{color:#9ab3ff}.intro{font-size:clamp(16px,1.8vw,19px);line-height:1.7;color:var(--muted);max-width:650px;margin:0 0 43px}
+    .cards{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:20px}.card{position:relative;display:flex;flex-direction:column;min-height:340px;padding:31px;border-radius:24px;text-decoration:none;color:inherit;background:linear-gradient(145deg,#192a4b,#111b32);border:1px solid #35496e;overflow:hidden;isolation:isolate;transition:transform .25s ease,border-color .25s ease,box-shadow .25s ease}.card:hover,.card:focus-visible{transform:translateY(-6px);border-color:#8baaff;box-shadow:0 20px 50px #02091666;outline:none}.card:focus-visible{outline:3px solid #b3c7ff;outline-offset:4px}.card.no{background:linear-gradient(145deg,#1b304a,#111e32)}.card:after{content:"";position:absolute;z-index:-1;width:310px;height:310px;border-radius:50%;right:-130px;top:-125px;background:radial-gradient(circle,#5377de40,transparent 70%)}.card.no:after{background:radial-gradient(circle,#36a9ac35,transparent 70%)}
+    .card-top{display:flex;justify-content:space-between;align-items:center;gap:15px}.language-tag{font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:#a5b9df;font-weight:750}.flag{font-size:29px;line-height:1}.card h2{font-size:clamp(29px,3.4vw,39px);letter-spacing:-.045em;margin:37px 0 10px}.card p{font-size:15px;line-height:1.65;color:#b2c0dc;max-width:340px;margin:0}.phonemes{display:flex;flex-wrap:wrap;gap:8px;margin:25px 0 30px}.phonemes span{font-family:ui-monospace,SFMono-Regular,Consolas,monospace;border:1px solid #405579;border-radius:9px;background:#ffffff0b;padding:8px 11px;font-size:15px;color:#cbd8ff}.card.no .phonemes span{color:#b5e7e1}.card-bottom{display:flex;align-items:center;justify-content:space-between;gap:15px;margin-top:auto;padding-top:17px;border-top:1px solid #ffffff1c;font-weight:750;font-size:14px}.arrow{display:grid;place-items:center;width:38px;height:38px;border-radius:50%;background:#4269d2;color:white;transition:transform .25s ease}.arrow svg{display:block;width:19px;height:19px}.no .arrow{background:#247f8e}.card:hover .arrow{transform:translateX(4px)}
+    footer{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;color:#8192b5;font-size:12px;padding-top:20px;border-top:1px solid #ffffff18}footer strong{color:#a6b7d7;font-weight:600}
+    @media(max-width:700px){.shell{padding:23px 18px}.top-note{display:none}main{padding:65px 0}.cards{grid-template-columns:1fr}.card{min-height:310px;padding:25px}.card h2{margin-top:27px}.intro{margin-bottom:30px}}@media(prefers-reduced-motion:reduce){.card,.arrow{transition:none}}
+  </style>
+</head>
+<body>
+  <div class="shell">
+    <header class="topbar"><div class="brand"><div class="brand-mark" aria-hidden="true">ə</div><span>Pronunciation Studio</span></div><span class="top-note">Listen · Practice · Improve</span></header>
+    <main>
+      <div class="eyebrow">Interactive IPA practice</div>
+      <h1>Find your <span>sound.</span><br>Build your confidence.</h1>
+      <p class="intro">Explore vowels and consonants, discover word examples, and listen at your own pace. Choose a language to start practicing.</p>
+      <section class="cards" aria-label="Choose a language">
+        <a class="card" href="english.html" aria-label="Start English pronunciation practice">
+          <div class="card-top"><span class="language-tag">Language 01</span><span class="flag" aria-hidden="true">🇬🇧</span></div>
+          <h2>English</h2>
+          <p>Explore English sounds with interactive IPA cards and tap-to-listen word practice.</p>
+          <div class="phonemes" aria-hidden="true"><span>/ɪ/</span><span>/iː/</span><span>/æ/</span><span>/θ/</span><span>/ʃ/</span></div>
+          <div class="card-bottom"><span>Start practicing</span><span class="arrow" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14m-6-6 6 6-6 6"/></svg></span></div>
+        </a>
+        <a class="card no" href="norwegian.html" aria-label="Start uttaletrening på norsk">
+          <div class="card-top"><span class="language-tag">Språk 02</span><span class="flag" aria-hidden="true">🇳🇴</span></div>
+          <h2>Norwegian</h2>
+          <p>Øv på norske vokaler, konsonanter og særegne lyder med eksempler du kan lytte til.</p>
+          <div class="phonemes" aria-hidden="true"><span>/yː/</span><span>/ʉː/</span><span>/øː/</span><span>/æ/</span><span>/ç/</span></div>
+          <div class="card-bottom"><span>Start å øve</span><span class="arrow" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14m-6-6 6 6-6 6"/></svg></span></div>
+        </a>
+      </section>
+    </main>
+    <footer><span><strong>Pronunciation Studio</strong> · A simple space for better pronunciation</span><span>English & Norwegian</span></footer>
+  </div>
+</body>
+</html>
